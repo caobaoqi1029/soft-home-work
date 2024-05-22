@@ -1,0 +1,52 @@
+@startuml
+!theme plain
+!define MAIN_COLOR #F0E68C
+!define DEV_COLOR #87CEEB
+!define FEAT_COLOR #32CD32
+!define HOTFIX_COLOR #FF6347
+!define RELEASE_COLOR #6A5ACD
+!define MERGE_COLOR #FFD700
+
+skinparam backgroundColor #FFFFFF
+
+rectangle "仓库初始化" as Init {
+  [main] -down-> [dev] : 创建并保护\n分支
+}
+
+rectangle "新功能开发" as FeatureDevelopment {
+  [dev] -right-> [feat/功能名称] : 检出新分支
+  [feat/功能名称] --> [本地开发] : 开发新功能
+  [本地开发] --> [PR to dev] : 推送并创建PR
+  [PR to dev] --> [测试] : 测试人员测试
+  [测试] --> [审核PR] : 管理员审核
+  [审核PR] -down-> [dev] : 合并到dev
+}
+
+rectangle "版本发布" as Release {
+  [dev] -right-> [PR to main] : 创建PR到main
+  [PR to main] --> [审核PR] : 管理员审核
+  [审核PR] -down-> [main] : 合并到main
+  [main] --> [打tag] : 打上版本tag
+  [打tag] --> [自动化构建] : 自动化版本构建
+}
+
+rectangle "紧急修复" as Hotfix {
+  [main] -right-> [hot-fix/问题描述] : 检出新分支
+  [hot-fix/问题描述] --> [修复并测试] : 修复工作
+  [修复并测试] --> [PR to main] : 推送并创建PR到main
+  [PR to main] --> [审核PR到main] : 管理员审核
+  [审核PR到main] -down-> [main] : 合并到main
+  [main] --> [打tag（如果适用）] : 打上版本tag
+  [hot-fix/问题描述] -down-> [PR to dev] : 创建PR到dev
+  [PR to dev] --> [审核PR到dev] : 管理员审核
+  [审核PR到dev] -down-> [dev] : 合并到dev
+}
+
+rectangle "注意事项" as Notes {
+  note right of [feat/功能名称] : 定期从dev拉取更新
+  note right of [PR to dev] : 利用PR进行代码审查
+  note right of [dev] : 定期清理合并后的分支
+  note right of [打tag] : 更新文档和确保tag符合SemVer
+}
+
+@enduml

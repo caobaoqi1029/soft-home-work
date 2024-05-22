@@ -1,0 +1,94 @@
+@startuml
+!theme plain
+' 定义包
+package "前端模块" {
+  class LoginPage {
+    +authenticateUser()
+  }
+  class RegisterPage {
+    +registerUser()
+  }
+  class ForgetPage {
+    +resetPassword()
+  }
+  class ManagePage {
+    +manageServers()
+    +executeRemoteCommands()
+    +viewCollectedData()
+    +processData()
+    +displayData()
+  }
+  class SecurityPage {
+    +changeSecuritySettings()
+  }
+}
+
+' 用户管理模块
+class UserManagement {
+  +registerUser()
+  +loginUser()
+  +managePermissions()
+}
+
+' 服务器管理模块
+class ServerManagement {
+  +addServer()
+  +removeServer()
+  +configureMonitoring()
+}
+
+' 数据收集模块
+class DataCollection {
+  +collectData()
+  +reportData()
+}
+
+' 数据处理模块
+class DataProcessing {
+  +processData()
+  +storeData()
+}
+
+' 数据展示模块
+class DataDisplay {
+  +queryData()
+  +showDataOnUI()
+}
+
+' 远程控制模块
+class RemoteControl {
+  +executeCommand()
+}
+
+' 安全模块
+class Security {
+  +authenticate()
+  +authorize()
+  +encryptData()
+}
+
+' 关系
+LoginPage -- UserManagement : 交互
+LoginPage -- Security : 交互
+
+RegisterPage -- UserManagement : 交互
+
+ForgetPage -- UserManagement : 交互
+
+ManagePage -- ServerManagement : 交互
+ManagePage -- RemoteControl : 交互
+ManagePage -- DataCollection : 交互
+ManagePage -- DataProcessing : 交互
+ManagePage -- DataDisplay : 交互
+
+SecurityPage -- Security : 交互
+
+' 安全模块保护其他所有模块
+Security -- UserManagement : 保护
+Security -- ServerManagement : 保护
+Security -- DataCollection : 保护
+Security -- DataProcessing : 保护
+Security -- DataDisplay : 保护
+Security -- RemoteControl : 保护
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+!theme plain
+!define MAIN_COLOR #F0E68C
+!define DEV_COLOR #87CEEB
+!define FEAT_COLOR #32CD32
+!define HOTFIX_COLOR #FF6347
+!define RELEASE_COLOR #6A5ACD
+
+skinparam state {
+    BackgroundColor<<main>> MAIN_COLOR
+    BackgroundColor<<dev>> DEV_COLOR
+    BackgroundColor<<feature>> FEAT_COLOR
+    BackgroundColor<<hotfix>> HOTFIX_COLOR
+    FontColor #FFFFFF
+}
+
+[*] --> main : 初始化仓库
+main : main 分支
+main --> dev : 创建并保护\n分支
+dev : dev 分支
+
+state dev {
+  [*] --> feature : 检出新分支
+  feature : 开发新功能
+  feature --> PR_dev : 推送并创建PR
+  PR_dev : PR到dev并测试
+  PR_dev --> [*] : 合并到dev
+  note right of PR_dev : 测试人员测试\n管理员审核
+}
+
+state main {
+  [*] --> hotfix : 检出hot-fix分支
+  hotfix : 紧急修复
+  hotfix --> PR_main_hotfix : 推送并创建PR到main
+  PR_main_hotfix : 审核PR到main
+  PR_main_hotfix --> [*] : 合并到main
+  note right of PR_main_hotfix : 管理员审核
+}
+
+state main {
+  [*] --> release : 创建PR到main
+  release : 版本发布
+  release --> tag : 合并到main并打tag
+  tag : 自动化构建
+  tag --> [*]
+  note right of tag : 打上版本tag
+}
+
+dev -right-> main : 版本发布
+main --> dev : 紧急修复合并回dev
+
+note right of dev : 定期从main拉取更新\n定期清理合并后的分支
+note right of main : 更新文档\n确保tag符合SemVer
+
+@enduml

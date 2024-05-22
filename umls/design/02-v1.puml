@@ -1,0 +1,25 @@
+@startuml
+!theme plain
+skinparam componentStyle rectangle
+
+left to right direction
+actor "普通用户" as user
+
+rectangle "服务器监控系统" {
+    usecase "登录/注册" as UC_Login
+    usecase "通过邮箱登录" as UC_LoginByEmail
+    usecase "通过验证码登录" as UC_LoginByCode
+    usecase "个人信息管理" as UC_Profile
+    usecase "监控数据查看" as UC_Monitor
+
+    UC_Login <.. UC_LoginByEmail : <<extend>>
+    UC_Login <.. UC_LoginByCode : <<extend>>
+
+    UC_Profile ..> UC_Login : <<include>>
+    UC_Monitor ..> UC_Login : <<include>>
+
+    user -- UC_Login
+    user -- UC_Profile
+    user -- UC_Monitor
+}
+@enduml
