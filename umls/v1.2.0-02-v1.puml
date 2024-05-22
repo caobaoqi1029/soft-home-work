@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+
+title 用户注册流程
+
+start
+:前端使用axios POST请求\n/api/auth/ask-code获取验证码;
+
+:用户输入用户名、密码、邮箱和验证码;
+
+if (前端校验) then (失败)
+  :返回错误信息给用户;
+  stop
+else (成功)
+  :前端使用axios POST请求\n/api/auth/register;
+endif
+
+:后端FlowLimitingFilter判断IP是否被限流;
+if (被限流?) then (是)
+  :返回"操作频繁，请稍后再试";
+  stop
+else (否)
+  :进行验证码校验;
+endif
+
+if (验证码为null?) then (是)
+  :返回"请先获取验证码";
+  stop
+elseif (验证码错误或过期?) then (是)
+  :返回"验证码错误或过期";
+  stop
+else (否)
+  :通过findAccountByNameOrEmail\n判断email是否已被注册;
+endif
+
+if (邮箱已注册?) then (是)
+  :返回"该邮箱地址已注册";
+  stop
+else (否)
+  :密码加密并保存账户信息至数据库;
+  if (保存成功?) then (是)
+    :返回"注册成功"并跳转至登录页面;
+    stop
+  else (否)
+    :返回"内部错误、注册失败";
+    stop
+  endif
+endif
+
+@enduml

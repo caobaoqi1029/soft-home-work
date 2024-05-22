@@ -1,0 +1,47 @@
+@startuml
+!theme plain
+
+title 用户注册时序图
+
+actor 用户 as user
+participant "前端" as frontend
+participant "后端\n/api/auth/ask-code" as askCodeAPI
+participant "后端\n/api/auth/register" as registerAPI
+participant "FlowLimitingFilter" as flowFilter
+participant "验证码校验" as codeValidation
+participant "数据库\nfindAccountByNameOrEmail" as dbCheck
+participant "密码加密器\npasswordEncoder" as passwordEncoder
+participant "数据库\nsave(account)" as dbSave
+
+user -> frontend : 输入注册信息
+frontend -> askCodeAPI : POST /api/auth/ask-code\n获取验证码
+askCodeAPI -> user : 返回验证码
+user -> frontend : 输入验证码
+frontend -> frontend : 校验输入信息
+alt 校验失败
+    frontend -> user : 显示校验错误
+else 校验成功
+    frontend -> registerAPI : POST /api/auth/register\n提交注册信息
+    registerAPI -> flowFilter : 检查IP限流
+    alt 被限流
+        flowFilter -> user : 返回"操作频繁，请稍后再试"
+    else 未被限流
+        flowFilter -> codeValidation : 进行验证码校验
+        alt 验证码校验失败
+            codeValidation -> user : 返回"验证码错误或过期"
+        else 验证码校验成功
+            codeValidation -> dbCheck : 检查邮箱是否已注册
+            alt 邮箱已注册
+                dbCheck -> user : 返回"该邮箱地址已注册"
+            else 邮箱未注册
+                dbCheck -> passwordEncoder : 加密密码
+                passwordEncoder -> dbSave : 保存账户信息
+                alt 保存成功
+                    dbSave -> user : 返回"注册成功"并跳转至登录页面
+                else 保存失败
+                    dbSave -> user : 返回"内部错误、注册失败"
+                end
+end
+end
+
+@enduml

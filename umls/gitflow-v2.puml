@@ -1,0 +1,35 @@
+@startuml
+!theme plain
+!define MAIN_COLOR #F0E68C
+!define DEV_COLOR #87CEEB
+!define FEAT_COLOR #32CD32
+!define HOTFIX_COLOR #FF6347
+!define RELEASE_COLOR #6A5ACD
+!define MERGE_COLOR #FFD700
+
+skinparam backgroundColor #FFFFFF
+
+[*] --> Init : 仓库初始化
+Init --> DevBranch : 创建和保护\n[dev]分支
+DevBranch --> FeatureDevelopment : 开发新功能
+FeatureDevelopment --> DevBranch : PR并合并到[dev]
+DevBranch --> Release : 版本发布
+Release --> MainBranch : 合并到[main]\n打tag
+MainBranch --> Hotfix : 紧急修复
+Hotfix --> MainBranch : 修复并合并到[main]\n打tag（如果适用）
+Hotfix --> DevBranch : 修复并合并到[dev]
+
+note right of FeatureDevelopment
+  定期从[dev]拉取更新
+  利用PR进行代码审查
+end note
+
+note right of DevBranch
+  定期清理合并后的分支
+end note
+
+note right of MainBranch
+  更新文档和确保tag符合SemVer
+end note
+
+@enduml
