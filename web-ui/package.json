@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "main": "electron/main.js",
-    "author": "Robot0817",
+    "author": "cbq",
     "description": "The monitor-web @ jzxy",
     "repository": "https://github.com/caobaoqi1029/soft-home-work",
     "scripts": {

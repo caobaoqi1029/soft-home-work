@@ -3,17 +3,14 @@ permissions:
   contents: write
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
 
 jobs:
   release:
     name: build and release electron app
     runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./web-ui
+
     if: startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: false
@@ -40,10 +37,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: pre show
+        if: matrix.os == 'windows-latest'
+        run: cd build || ls -al
+
       - name: Cleanup Artifacts for Windows 🧹
         if: matrix.os == 'windows-latest'
         run: |
           npx del-cli "build/*" "!build/*.exe" "!build/*.msi" "!build/*.zip" "!build/*.yml"
+
+      - name: post show
+        if: matrix.os == 'windows-latest'
+        run: cd build || ls -al
 
       - name: upload artifacts 🔨
         uses: actions/upload-artifact@v4
