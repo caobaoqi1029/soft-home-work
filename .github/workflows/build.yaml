@@ -52,3 +52,16 @@ jobs:
         run: |
           cd build
           dir
+
+      - name: upload artifacts 🔨
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}
+          path: ./web-ui/build
+
+      - name: release 😶‍🌫️
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'build/**'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
