@@ -36,9 +36,6 @@
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true
         },
-        "msi": {
-            "oneClick": false
-        },
         "files": [
             "./electron/main.js",
             "./electron/preload.js",
