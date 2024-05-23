@@ -10,6 +10,10 @@ jobs:
   release:
     name: build and release electron app
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./web-ui
 
     strategy:
       fail-fast: false
