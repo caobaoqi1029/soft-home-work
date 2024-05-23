@@ -12,7 +12,7 @@ on:
   pull_request:
   # This creates an environment variable called `IMAGE_NAME ` with the value `ghtoken_product_demo`.
 env:
-  IMAGE_NAME: monitor-web-ui
+  IMAGE_NAME: soft-home-work
 #
 jobs:
   # This pushes the image to GitHub Packages.

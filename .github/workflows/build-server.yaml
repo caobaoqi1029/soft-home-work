@@ -37,6 +37,7 @@ jobs:
       - name: 构建 docker-compose.yaml 文件 🔨
         run: |
           cd ..
+          mkdir build
           zip -r ./docker-compose-server.zip ./docker
           echo "docker-compose-server.zip 打包成功"
           cp ./docker-compose-server.zip ./build/

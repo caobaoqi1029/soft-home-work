@@ -54,6 +54,6 @@ jobs:
           context: ./web-ui
           file: ./web-ui/Dockerfile
           push: true
-          tags: cbh0817/monitor-web-ui:${{ github.ref }}
+          tags: cbh0817/monitor-web-ui:latest
 
 

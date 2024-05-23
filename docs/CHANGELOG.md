@@ -1,3 +1,9 @@
+## V1.3.1 <Badge type="tip" text="^1.3.0" />
+
+fix 
+
+- build error
+
 ## V1.3.0 <Badge type="tip" text="^1.3.0" />
 
 feat 🤪
