@@ -11,7 +11,6 @@ jobs:
     name: build and release electron app
     runs-on: ${{ matrix.os }}
 
-    if: startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: false
       matrix:
@@ -58,7 +57,6 @@ jobs:
 
       - name: release 😶‍🌫️
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: 'build/**'
         env:
