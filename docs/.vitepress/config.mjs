@@ -24,12 +24,14 @@ export default defineConfig({
                     {text: '🤪 01-引言', link: '/start/start-01.md'},
                     {text: '🤗 02-可行性研究', link: '/start/start-02.md'},
                     {text: '😃 03-需求分析', link: '/start/start-03.md'},
-                    {text: '🤩 04-系统设计', link: '/start/start-04.md'},
+                    {text: '🤩 04-概要设计', link: '/start/start-04.md'},
                     {text: '😧 05-详细设计', link: '/start/start-05.md'},
                     {text: '🫠 06-编程实现', link: '/start/start-06.md'},
                     {text: '🤢 07-测试', link: '/start/start-07.md'},
                     {text: '🤓 08-用户手册', link: '/start/start-08.md'},
                     {text: '🤯 09-总结反思', link: '/start/start-09.md'},
+                    {text: '😴 项目后端说明', link: '/start/start-10.md'},
+                    {text: '👽 项目前端说明', link: '/start/start-11.md'},
                     {text: '🥸 Index ', link: '/start/index.md'},
                 ]
             },
@@ -72,12 +74,14 @@ export default defineConfig({
                     {text: '🤪 01-引言', link: '/start/start-01.md'},
                     {text: '🤗 02-可行性研究', link: '/start/start-02.md'},
                     {text: '😃 03-需求分析', link: '/start/start-03.md'},
-                    {text: '🤩 04-系统设计', link: '/start/start-04.md'},
+                    {text: '🤩 04-概要设计', link: '/start/start-04.md'},
                     {text: '😧 05-详细设计', link: '/start/start-05.md'},
                     {text: '🫠 06-编程实现', link: '/start/start-06.md'},
                     {text: '🤢 07-测试', link: '/start/start-07.md'},
                     {text: '🤓 08-用户手册', link: '/start/start-08.md'},
-                    {text: '🤯 09-总结反思', link: '/start/start-09.md'}
+                    {text: '🤯 09-总结反思', link: '/start/start-09.md'},
+                    {text: '😴 项目后端说明', link: '/start/start-10.md'},
+                    {text: '👽 项目前端说明', link: '/start/start-11.md'},
                 ]
             },
             {
