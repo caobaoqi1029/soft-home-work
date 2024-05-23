@@ -10,7 +10,10 @@ jobs:
   release:
     name: build and release electron app
     runs-on: ${{ matrix.os }}
-
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./web-ui
     if: startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: false
