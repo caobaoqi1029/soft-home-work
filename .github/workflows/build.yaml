@@ -33,7 +33,6 @@ jobs:
         run: |
           npm i -g yarn
           yarn install
-          mkdir build
 
       - name: Build Electron App for windows 😂
         if: matrix.os == 'windows-latest'
@@ -47,4 +46,4 @@ jobs:
           npx del-cli "build/*" "!build/*.exe" "!build/*.msi" "!build/*.zip" "!build/*.yml"
 
       - name: test
-        run: cd build || ls al
+        run: dir
