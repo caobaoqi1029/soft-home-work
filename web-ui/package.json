@@ -5,6 +5,7 @@
     "main": "electron/main.js",
     "author": "Robot0817",
     "description": "The monitor-web @ jzxy",
+    "repository": "https://github.com/caobaoqi1029/soft-home-work",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
