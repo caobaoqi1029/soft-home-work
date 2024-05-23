@@ -15,8 +15,8 @@
         "electron:build": "electron-builder"
     },
     "build": {
-        "appId": "jzxy.monitor.web",
-        "productName": "monitor-web",
+        "appId": "jzxy.monitor.ui",
+        "productName": "monitor-ui",
         "buildVersion": "1.0.0",
         "copyright": "Copyright © 2024 Robot0817",
         "win": {
