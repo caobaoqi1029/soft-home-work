@@ -40,28 +40,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: pre show
-        if: matrix.os == 'windows-latest'
-        run: cd build || ls -al
-
       - name: Cleanup Artifacts for Windows 🧹
         if: matrix.os == 'windows-latest'
         run: |
           npx del-cli "build/*" "!build/*.exe" "!build/*.msi" "!build/*.zip" "!build/*.yml"
-
-      - name: post show
-        if: matrix.os == 'windows-latest'
-        run: cd build || ls -al
 
       - name: upload artifacts 🔨
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}
           path: build
-
-      - name: release 😶‍🌫️
-        uses: softprops/action-gh-release@v1
-        with:
-          files: 'build/**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
