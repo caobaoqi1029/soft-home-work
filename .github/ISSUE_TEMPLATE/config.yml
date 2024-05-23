@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Extension Development
+    url: https://github.com/caobaoqi1029/soft-home-work/discussions
+    about: Please use this for extension development questions and ideas.

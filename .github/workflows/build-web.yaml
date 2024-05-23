@@ -1,0 +1,59 @@
+name: CI|CD build-web
+permissions:
+  contents: write
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  docket-build:
+    name: web-ui docker build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./web-ui
+
+    steps:
+      - name: 读取仓库内容 👓
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js 💖
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies 😁
+        run: |
+          npm i -g yarn
+          yarn install
+
+      - name: 构建 dist 🔨
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run:  yarn run build
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录到 DockerHub 😘
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME_CBH }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN_CBH }}
+
+      - name: 构建并推送到 Dockerhub ❤️
+        uses: docker/build-push-action@v5
+        with:
+          context: ./web-ui
+          file: ./web-ui/Dockerfile
+          push: true
+          tags: cbh0817/monitor-web-ui:${{ github.ref }}
+
+
