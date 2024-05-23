@@ -66,6 +66,7 @@
         "electron": "^30.0.2",
         "electron-builder": "^24.13.3",
         "less": "^4.2.0",
+        "del-cli": "^5.0.0",
         "unplugin-auto-import": "^0.15.2",
         "unplugin-vue-components": "^0.24.1",
         "vite": "^4.4.6"
