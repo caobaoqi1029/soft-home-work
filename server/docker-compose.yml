@@ -1,0 +1,72 @@
+version: '3.7'
+
+services:
+  monitor-server:
+    build: ../docker/monitor-server
+    image: cbq2024/monitor-server:1.0.0
+    container_name: monitor-server
+    depends_on:
+      - influxdb2-prod
+      - mysql8_3306-prod
+      - rabbitmq-prod
+      - redis_6379-prod
+    ports:
+      - "8080:8080"
+    networks:
+      - monitor-server-prod
+  influxdb2-prod:
+    image: influxdb:2
+    container_name: influxdb2-prod
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb2-data-prod:/var/lib/influxdb2
+      - influxdb2-config-prod:/etc/influxdb2
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: "setup"
+      DOCKER_INFLUXDB_INIT_USERNAME: "cbq"
+      DOCKER_INFLUXDB_INIT_PASSWORD: "cbq.0515"
+      DOCKER_INFLUXDB_INIT_ORG: "cbq"
+      DOCKER_INFLUXDB_INIT_BUCKET: "test"
+    networks:
+      - monitor-server-prod
+
+  mysql8_3306-prod:
+    build: ../db
+    container_name: mysql8_3306-prod
+    ports:
+      - "3306:3306"
+    volumes:
+        - mysql-prod-data:/var/lib/mysql
+    networks:
+      - monitor-server-prod
+
+  redis_6379-prod:
+    image: redis
+    container_name: redis_6379-prod
+    ports:
+      - "6379:6379"
+    networks:
+      - monitor-server-prod
+
+  rabbitmq-prod:
+    image: rabbitmq:management
+    container_name: rabbitmq-prod
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmq-home-prod:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "cbq"
+      RABBITMQ_DEFAULT_PASS: "cbq"
+    networks:
+      - monitor-server-prod
+volumes:
+  influxdb2-data-prod:
+  influxdb2-config-prod:
+  rabbitmq-home-prod:
+  mysql-prod-data:
+
+networks:
+  monitor-server-prod:

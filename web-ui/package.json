@@ -32,5 +32,9 @@
         "unplugin-auto-import": "^0.15.2",
         "unplugin-vue-components": "^0.24.1",
         "vite": "^4.4.6"
+    },
+    "packageManager": "yarn@1.22.22",
+    "engines": {
+        "node": ">=18.17.0"
     }
 }

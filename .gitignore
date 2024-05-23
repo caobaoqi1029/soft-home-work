@@ -28,7 +28,7 @@ lerna-debug.log*
 .vscode/*
 !.vscode/extensions.json
 
-docs/src/.vuepress/.cache/
-docs/src/.vuepress/.temp/
-docs/src/.vuepress/dist/
+docs/.vitepress/cache
+docs/.vitepress/dist
 
+config/server.json

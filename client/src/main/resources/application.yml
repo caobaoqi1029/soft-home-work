@@ -1,0 +1,3 @@
+cbq:
+  token: ${CBQ_TOKEN:83WpAaS43wcsyYmvgEwridHG}
+  address: ${CBQ_ADDRESS:http://localhost:8080}
