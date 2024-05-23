@@ -23,8 +23,7 @@
             "icon": "./public/favicon-256x256.ico",
             "target": [
                 "nsis",
-                "zip",
-                "msi"
+                "zip"
             ]
         },
         "nsis": {
